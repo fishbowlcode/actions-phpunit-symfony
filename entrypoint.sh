@@ -2,6 +2,7 @@
 set -e
 
 PHP_FULL_VERSION=$(php -r 'echo phpversion();')
+SIMPLE_PHPUNIT_PATH="${SIMPLE_PHPUNIT_PATH:-vendor/bin/simple-phpunit}"
 
 if [ -z "$(ls)" ]; then
   echo "No code have been found.  Did you checkout with «actions/checkout» ?"
@@ -16,9 +17,9 @@ if [ ! -d vendor/ ] || [ ! -f vendor/autoload.php ]; then
   exit 1
 fi
 
-if [[ ! -f vendor/bin/simple-phpunit ]]; then
-  echo "ERROR: simple-phpunit is not found in «vendor/bin»"
-  echo "Add «symfony/phpunit-bridge» as dev dependency"
+if [[ ! -f "$SIMPLE_PHPUNIT_PATH" ]]; then
+  echo "ERROR: simple-phpunit is not found at «$SIMPLE_PHPUNIT_PATH»"
+  echo "Set SIMPLE_PHPUNIT_PATH or add «symfony/phpunit-bridge» as a dev dependency"
   exit 1
 fi
 
@@ -32,6 +33,6 @@ chmod +x /usr/bin/composer
 
 echo "## Running PHPUnit"
 echo "PHP Version : ${PHP_FULL_VERSION}"
-./vendor/bin/simple-phpunit --version
+"$SIMPLE_PHPUNIT_PATH" --version
 
-php -d memory_limit=-1 ./vendor/bin/simple-phpunit --testdox
+php -d memory_limit=-1 "$SIMPLE_PHPUNIT_PATH" --testdox
