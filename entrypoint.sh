@@ -35,4 +35,14 @@ echo "## Running PHPUnit"
 echo "PHP Version : ${PHP_FULL_VERSION}"
 "$SIMPLE_PHPUNIT_PATH" --version
 
-php -d memory_limit=-1 "$SIMPLE_PHPUNIT_PATH" --testdox
+PHPUNIT_ARGS="--testdox"
+
+if [ -n "$INPUT_GROUP" ]; then
+  PHPUNIT_ARGS="$PHPUNIT_ARGS --group=$INPUT_GROUP"
+fi
+
+if [ -n "$INPUT_TESTSUITE" ]; then
+  PHPUNIT_ARGS="$PHPUNIT_ARGS --testsuite=$INPUT_TESTSUITE"
+fi
+
+php -d memory_limit=-1 "$SIMPLE_PHPUNIT_PATH" $PHPUNIT_ARGS

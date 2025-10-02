@@ -4,6 +4,13 @@ author: 'David Lumaye (chindit)'
 branding:
     icon: 'check-circle'
     color: 'purple'
+inputs:
+    group:
+        description: 'Only run tests from the specified group(s)'
+        required: false
+    testsuite:
+        description: 'Only run tests from the specified test suite'
+        required: false
 runs:
     using: 'docker'
     image: 'Dockerfile'
